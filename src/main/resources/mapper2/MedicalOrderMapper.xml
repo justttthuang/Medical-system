@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ms.medicalsystem.dao.MedicalOrderMapper">
+  <resultMap id="BaseResultMap" type="org.ms.medicalsystem.model.MedicalOrder">
+    <id column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="patient_id" jdbcType="INTEGER" property="patientId" />
+    <result column="doctor_id" jdbcType="INTEGER" property="doctorId" />
+    <result column="order_date" jdbcType="TIMESTAMP" property="orderDate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="org.ms.medicalsystem.model.MedicalOrder">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, patient_id, doctor_id, order_date
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from medical_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from medical_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ms.medicalsystem.model.MedicalOrder">
+    insert into medical_order (order_id, patient_id, doctor_id, 
+      order_date, content)
+    values (#{orderId,jdbcType=INTEGER}, #{patientId,jdbcType=INTEGER}, #{doctorId,jdbcType=INTEGER}, 
+      #{orderDate,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.ms.medicalsystem.model.MedicalOrder">
+    insert into medical_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="patientId != null">
+        patient_id,
+      </if>
+      <if test="doctorId != null">
+        doctor_id,
+      </if>
+      <if test="orderDate != null">
+        order_date,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="patientId != null">
+        #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null">
+        #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="orderDate != null">
+        #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.ms.medicalsystem.model.MedicalOrder">
+    update medical_order
+    <set>
+      <if test="patientId != null">
+        patient_id = #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null">
+        doctor_id = #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="orderDate != null">
+        order_date = #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="org.ms.medicalsystem.model.MedicalOrder">
+    update medical_order
+    set patient_id = #{patientId,jdbcType=INTEGER},
+      doctor_id = #{doctorId,jdbcType=INTEGER},
+      order_date = #{orderDate,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.ms.medicalsystem.model.MedicalOrder">
+    update medical_order
+    set patient_id = #{patientId,jdbcType=INTEGER},
+      doctor_id = #{doctorId,jdbcType=INTEGER},
+      order_date = #{orderDate,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>

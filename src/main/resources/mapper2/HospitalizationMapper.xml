@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ms.medicalsystem.dao.HospitalizationMapper">
+  <resultMap id="BaseResultMap" type="org.ms.medicalsystem.model.Hospitalization">
+    <id column="hospitalization_id" jdbcType="INTEGER" property="hospitalizationId" />
+    <result column="patient_id" jdbcType="INTEGER" property="patientId" />
+    <result column="doctor_id" jdbcType="INTEGER" property="doctorId" />
+    <result column="room_number" jdbcType="VARCHAR" property="roomNumber" />
+    <result column="admission_date" jdbcType="TIMESTAMP" property="admissionDate" />
+    <result column="discharge_date" jdbcType="TIMESTAMP" property="dischargeDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    hospitalization_id, patient_id, doctor_id, room_number, admission_date, discharge_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hospitalization
+    where hospitalization_id = #{hospitalizationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hospitalization
+    where hospitalization_id = #{hospitalizationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ms.medicalsystem.model.Hospitalization">
+    insert into hospitalization (hospitalization_id, patient_id, doctor_id, 
+      room_number, admission_date, discharge_date
+      )
+    values (#{hospitalizationId,jdbcType=INTEGER}, #{patientId,jdbcType=INTEGER}, #{doctorId,jdbcType=INTEGER}, 
+      #{roomNumber,jdbcType=VARCHAR}, #{admissionDate,jdbcType=TIMESTAMP}, #{dischargeDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.ms.medicalsystem.model.Hospitalization">
+    insert into hospitalization
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hospitalizationId != null">
+        hospitalization_id,
+      </if>
+      <if test="patientId != null">
+        patient_id,
+      </if>
+      <if test="doctorId != null">
+        doctor_id,
+      </if>
+      <if test="roomNumber != null">
+        room_number,
+      </if>
+      <if test="admissionDate != null">
+        admission_date,
+      </if>
+      <if test="dischargeDate != null">
+        discharge_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hospitalizationId != null">
+        #{hospitalizationId,jdbcType=INTEGER},
+      </if>
+      <if test="patientId != null">
+        #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null">
+        #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="roomNumber != null">
+        #{roomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionDate != null">
+        #{admissionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dischargeDate != null">
+        #{dischargeDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.ms.medicalsystem.model.Hospitalization">
+    update hospitalization
+    <set>
+      <if test="patientId != null">
+        patient_id = #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="doctorId != null">
+        doctor_id = #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="roomNumber != null">
+        room_number = #{roomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="admissionDate != null">
+        admission_date = #{admissionDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dischargeDate != null">
+        discharge_date = #{dischargeDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where hospitalization_id = #{hospitalizationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.ms.medicalsystem.model.Hospitalization">
+    update hospitalization
+    set patient_id = #{patientId,jdbcType=INTEGER},
+      doctor_id = #{doctorId,jdbcType=INTEGER},
+      room_number = #{roomNumber,jdbcType=VARCHAR},
+      admission_date = #{admissionDate,jdbcType=TIMESTAMP},
+      discharge_date = #{dischargeDate,jdbcType=TIMESTAMP}
+    where hospitalization_id = #{hospitalizationId,jdbcType=INTEGER}
+  </update>
+</mapper>

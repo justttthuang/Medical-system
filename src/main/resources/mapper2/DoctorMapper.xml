@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ms.medicalsystem.dao.DoctorMapper">
+  <resultMap id="BaseResultMap" type="org.ms.medicalsystem.model.Doctor">
+    <id column="doctor_id" jdbcType="INTEGER" property="doctorId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="specialization" jdbcType="VARCHAR" property="specialization" />
+    <result column="contact_info" jdbcType="VARCHAR" property="contactInfo" />
+    <result column="u_id" jdbcType="INTEGER" property="uId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    doctor_id, name, department, specialization, contact_info, u_id
+  </sql>
+  <select id="selectByDepartment" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from doctor
+    where department = #{department,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getAllDoctor" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from doctor
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doctor
+    where doctor_id = #{doctorId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from doctor
+    where doctor_id = #{doctorId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ms.medicalsystem.model.Doctor">
+    insert into doctor (doctor_id, name, department, 
+      specialization, contact_info, u_id
+      )
+    values (#{doctorId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{specialization,jdbcType=VARCHAR}, #{contactInfo,jdbcType=VARCHAR}, #{uId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.ms.medicalsystem.model.Doctor">
+    insert into doctor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="doctorId != null">
+        doctor_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="specialization != null">
+        specialization,
+      </if>
+      <if test="contactInfo != null">
+        contact_info,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="doctorId != null">
+        #{doctorId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="specialization != null">
+        #{specialization,jdbcType=VARCHAR},
+      </if>
+      <if test="contactInfo != null">
+        #{contactInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.ms.medicalsystem.model.Doctor">
+    update doctor
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="specialization != null">
+        specialization = #{specialization,jdbcType=VARCHAR},
+      </if>
+      <if test="contactInfo != null">
+        contact_info = #{contactInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where doctor_id = #{doctorId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.ms.medicalsystem.model.Doctor">
+    update doctor
+    set name = #{name,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      specialization = #{specialization,jdbcType=VARCHAR},
+      contact_info = #{contactInfo,jdbcType=VARCHAR},
+      u_id = #{uId,jdbcType=INTEGER}
+    where doctor_id = #{doctorId,jdbcType=INTEGER}
+  </update>
+</mapper>

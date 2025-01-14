@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ms.medicalsystem.dao.MedicineDispenseMapper">
+  <resultMap id="BaseResultMap" type="org.ms.medicalsystem.model.MedicineDispense">
+    <id column="dispense_id" jdbcType="INTEGER" property="dispenseId" />
+    <result column="patient_id" jdbcType="INTEGER" property="patientId" />
+    <result column="medicine_id" jdbcType="INTEGER" property="medicineId" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="dispense_date" jdbcType="TIMESTAMP" property="dispenseDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    dispense_id, patient_id, medicine_id, quantity, dispense_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from medicine_dispense
+    where dispense_id = #{dispenseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from medicine_dispense
+    where dispense_id = #{dispenseId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.ms.medicalsystem.model.MedicineDispense">
+    insert into medicine_dispense (dispense_id, patient_id, medicine_id, 
+      quantity, dispense_date)
+    values (#{dispenseId,jdbcType=INTEGER}, #{patientId,jdbcType=INTEGER}, #{medicineId,jdbcType=INTEGER}, 
+      #{quantity,jdbcType=INTEGER}, #{dispenseDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.ms.medicalsystem.model.MedicineDispense">
+    insert into medicine_dispense
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dispenseId != null">
+        dispense_id,
+      </if>
+      <if test="patientId != null">
+        patient_id,
+      </if>
+      <if test="medicineId != null">
+        medicine_id,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="dispenseDate != null">
+        dispense_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dispenseId != null">
+        #{dispenseId,jdbcType=INTEGER},
+      </if>
+      <if test="patientId != null">
+        #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="medicineId != null">
+        #{medicineId,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="dispenseDate != null">
+        #{dispenseDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.ms.medicalsystem.model.MedicineDispense">
+    update medicine_dispense
+    <set>
+      <if test="patientId != null">
+        patient_id = #{patientId,jdbcType=INTEGER},
+      </if>
+      <if test="medicineId != null">
+        medicine_id = #{medicineId,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="dispenseDate != null">
+        dispense_date = #{dispenseDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where dispense_id = #{dispenseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.ms.medicalsystem.model.MedicineDispense">
+    update medicine_dispense
+    set patient_id = #{patientId,jdbcType=INTEGER},
+      medicine_id = #{medicineId,jdbcType=INTEGER},
+      quantity = #{quantity,jdbcType=INTEGER},
+      dispense_date = #{dispenseDate,jdbcType=TIMESTAMP}
+    where dispense_id = #{dispenseId,jdbcType=INTEGER}
+  </update>
+</mapper>
