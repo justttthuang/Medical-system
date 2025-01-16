@@ -1,7 +1,11 @@
 package org.ms.medicalsystem.dao;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.ms.medicalsystem.model.MedicalOrder;
 
+import java.util.List;
+
+@Mapper
 public interface MedicalOrderMapper {
     int deleteByPrimaryKey(Integer orderId);
 
@@ -16,4 +20,6 @@ public interface MedicalOrderMapper {
     int updateByPrimaryKeyWithBLOBs(MedicalOrder record);
 
     int updateByPrimaryKey(MedicalOrder record);
+
+    List<MedicalOrder> getAll();
 }

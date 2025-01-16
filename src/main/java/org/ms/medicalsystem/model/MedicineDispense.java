@@ -12,6 +12,7 @@ public class MedicineDispense {
     private Integer quantity;
 
     private Date dispenseDate;
+    
 
     public Integer getDispenseId() {
         return dispenseId;
