@@ -1,7 +1,11 @@
 package org.ms.medicalsystem.model;
 
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import java.util.Date;
+@AllArgsConstructor
+@NoArgsConstructor
 public class MedicineDispense {
     private Integer dispenseId;
 
@@ -12,6 +16,16 @@ public class MedicineDispense {
     private Integer quantity;
 
     private Date dispenseDate;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    private String status;
     
 
     public Integer getDispenseId() {

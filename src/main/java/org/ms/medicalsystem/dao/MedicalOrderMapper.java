@@ -22,4 +22,6 @@ public interface MedicalOrderMapper {
     int updateByPrimaryKey(MedicalOrder record);
 
     List<MedicalOrder> getAll();
+
+    List<MedicalOrder> selectByDoctorId(int doctorId);
 }

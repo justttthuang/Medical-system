@@ -7,10 +7,17 @@
     <result column="medicine_id" jdbcType="INTEGER" property="medicineId" />
     <result column="quantity" jdbcType="INTEGER" property="quantity" />
     <result column="dispense_date" jdbcType="TIMESTAMP" property="dispenseDate" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    dispense_id, patient_id, medicine_id, quantity, dispense_date
+    dispense_id, patient_id, medicine_id, quantity, dispense_date,status
   </sql>
+  <select id="getAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from medicine_dispense
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -23,9 +30,9 @@
   </delete>
   <insert id="insert" parameterType="org.ms.medicalsystem.model.MedicineDispense">
     insert into medicine_dispense (dispense_id, patient_id, medicine_id, 
-      quantity, dispense_date)
+      quantity, dispense_date,status)
     values (#{dispenseId,jdbcType=INTEGER}, #{patientId,jdbcType=INTEGER}, #{medicineId,jdbcType=INTEGER}, 
-      #{quantity,jdbcType=INTEGER}, #{dispenseDate,jdbcType=TIMESTAMP})
+      #{quantity,jdbcType=INTEGER}, #{dispenseDate,jdbcType=TIMESTAMP},#{status})
   </insert>
   <insert id="insertSelective" parameterType="org.ms.medicalsystem.model.MedicineDispense">
     insert into medicine_dispense
@@ -45,6 +52,9 @@
       <if test="dispenseDate != null">
         dispense_date,
       </if>
+      <if test="status != null">
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="dispenseId != null">
@@ -61,6 +71,9 @@
       </if>
       <if test="dispenseDate != null">
         #{dispenseDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -87,7 +100,8 @@
     set patient_id = #{patientId,jdbcType=INTEGER},
       medicine_id = #{medicineId,jdbcType=INTEGER},
       quantity = #{quantity,jdbcType=INTEGER},
-      dispense_date = #{dispenseDate,jdbcType=TIMESTAMP}
+      dispense_date = #{dispenseDate,jdbcType=TIMESTAMP},
+     status = #{status}
     where dispense_id = #{dispenseId,jdbcType=INTEGER}
   </update>
 </mapper>
