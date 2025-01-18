@@ -18,4 +18,6 @@ public interface MedicineDispenseMapper {
     int updateByPrimaryKey(MedicineDispense record);
 
     List<MedicineDispense> getAll();
+
+    List<MedicineDispense> selectBypatientId(Integer patientId);
 }

@@ -1,5 +1,6 @@
 package org.ms.medicalsystem.controller;
 
+import org.ms.medicalsystem.model.Hospitalization;
 import org.ms.medicalsystem.model.MedicalOrder;
 import org.ms.medicalsystem.model.MedicineDispense;
 import org.ms.medicalsystem.service.DoctorService;
@@ -29,14 +30,35 @@ public class DoctorConller {
     }
 
     //查看所有的药单
-    @GetMapping("doctor/getMyselfMO")
+    @GetMapping("/doctor/getMyselfMO")
     public ResponseResult getAllMD(){
         return doctorService.getAllMD();
     }
 
-    //创建新的医嘱
-    @PostMapping("/test")
+    //创建新的药单
+    @PostMapping("/doctor/setOneMD")
     public ResponseResult setMD(@RequestBody MedicineDispense medicineDispense){
         return doctorService.setMD(medicineDispense);
+    }
+    //查看患者的药单
+    @GetMapping("/doctor/getMyselfMD/{patientId}")
+    public ResponseResult getMyselfMD(@PathVariable Integer patientId){
+        return doctorService.selectBypatientId(patientId);
+    }
+
+    //查看所有住院
+    @GetMapping("/doctor/getAllHp")
+    public ResponseResult getAllHp(){
+        return doctorService.getAllHp();
+    }
+    //创建新的住院单
+    @PostMapping("/doctor/setHp")
+    public ResponseResult setHp(@RequestBody Hospitalization hospitalization){
+        return doctorService.setHp(hospitalization);
+    }
+    //修改住院单,增加出院时间
+    @PostMapping("/doctor/discharge/{id}")
+    public ResponseResult discharge(@PathVariable int id){
+        return doctorService.discharge(id);
     }
 }

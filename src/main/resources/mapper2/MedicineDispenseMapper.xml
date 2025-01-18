@@ -17,6 +17,12 @@
     <include refid="Base_Column_List" />
     from medicine_dispense
   </select>
+  <select id="selectBypatientId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from medicine_dispense
+    where patient_id = #{patientId,jdbcType=INTEGER}
+  </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
