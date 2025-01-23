@@ -2,6 +2,8 @@ package org.ms.medicalsystem.dao;
 
 import org.ms.medicalsystem.model.Registration;
 
+import java.util.List;
+
 public interface RegistrationMapper {
     int deleteByPrimaryKey(Integer registrationId);
 
@@ -14,4 +16,8 @@ public interface RegistrationMapper {
     int updateByPrimaryKeySelective(Registration record);
 
     int updateByPrimaryKey(Registration record);
+
+    List<Registration> selectByDoctorId(Integer doctorId);
+
+    Registration selectByPatientId(Integer patientId);
 }

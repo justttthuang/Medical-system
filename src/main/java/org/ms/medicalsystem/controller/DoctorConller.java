@@ -57,8 +57,24 @@ public class DoctorConller {
         return doctorService.setHp(hospitalization);
     }
     //修改住院单,增加出院时间
-    @PostMapping("/doctor/discharge/{id}")
-    public ResponseResult discharge(@PathVariable int id){
-        return doctorService.discharge(id);
+    @PostMapping("/doctor/discharge/{patientId}")
+    public ResponseResult discharge(@PathVariable int patientId){
+        return doctorService.discharge(patientId);
     }
+    //查看自己的挂号
+    @GetMapping("/doctor/getMyselfGt/{doctorId}")
+    public ResponseResult getMyselfGt(@PathVariable Integer doctorId){
+        return doctorService.getMyselfGt(doctorId);
+    }
+    //进行就诊
+    @PostMapping("/doctor/visit/{registrationId}")
+    public ResponseResult visit(@PathVariable Integer registrationId){
+        return doctorService.visit(registrationId);
+    }
+    //完成就诊
+    @PostMapping("/doctor/over/{registrationId}")
+    public ResponseResult over(@PathVariable Integer registrationId){
+        return doctorService.over(registrationId);
+    }
+
 }

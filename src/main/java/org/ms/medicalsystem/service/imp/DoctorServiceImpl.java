@@ -3,10 +3,13 @@ package org.ms.medicalsystem.service.imp;
 import org.ms.medicalsystem.dao.HospitalizationMapper;
 import org.ms.medicalsystem.dao.MedicalOrderMapper;
 import org.ms.medicalsystem.dao.MedicineDispenseMapper;
+import org.ms.medicalsystem.dao.RegistrationMapper;
 import org.ms.medicalsystem.model.Hospitalization;
 import org.ms.medicalsystem.model.MedicalOrder;
 import org.ms.medicalsystem.model.MedicineDispense;
+import org.ms.medicalsystem.model.Registration;
 import org.ms.medicalsystem.service.DoctorService;
+import org.ms.medicalsystem.utils.PageHelper;
 import org.ms.medicalsystem.utils.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,8 @@ public class DoctorServiceImpl implements DoctorService {
     MedicineDispenseMapper medicineDispenseMapper;
     @Autowired
     HospitalizationMapper hospitalizationMapper;
+    @Autowired
+    RegistrationMapper registrationMapper;
     @Override
     public ResponseResult getAllMO() {
         try {
@@ -117,6 +122,47 @@ public class DoctorServiceImpl implements DoctorService {
             return new ResponseResult("200","办理出院成功");
         }
         return new ResponseResult("404","操作失败");
+    }
+
+    @Override
+    public ResponseResult getMyselfGt(Integer doctorId) {
+        try {
+            List<Registration> list = registrationMapper.selectByDoctorId(doctorId);
+            if(list.size() != 0){
+                return new ResponseResult("200","查询成功",list);
+            }
+        }catch (Exception e){
+            return new ResponseResult("404","查询失败");
+        }
+        return new ResponseResult("404","查询失败");
+
+    }
+
+    @Override
+    public ResponseResult visit(Integer registrationId) {
+        try{
+            Registration registration = registrationMapper.selectByPrimaryKey(registrationId);
+            registration.setStatus("就诊中");
+            int number = registrationMapper.updateByPrimaryKeySelective(registration);
+            if(number == 1){
+                return new ResponseResult("200","更新成功");
+            }
+        }catch (Exception e){
+            return new ResponseResult("404","更新失败");
+        }
+        return new ResponseResult("404","更新失败");
+    }
+
+    @Override
+    public ResponseResult over(Integer registrationId) {
+        Registration registration = registrationMapper.selectByPrimaryKey(registrationId);
+        registration.setStatus("就诊完成");
+        int number = registrationMapper.updateByPrimaryKeySelective(registration);
+        if(number == 1){
+            return new ResponseResult("200","更新成功");
+        }
+        return new ResponseResult("404","更新失败");
+
     }
 
 

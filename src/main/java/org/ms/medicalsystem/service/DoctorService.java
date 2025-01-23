@@ -23,4 +23,10 @@ public interface DoctorService {
     ResponseResult setHp(Hospitalization hospitalization);
 
     ResponseResult discharge(int id);
+
+    ResponseResult getMyselfGt(Integer doctorId);
+
+    ResponseResult visit(Integer registrationId);
+
+    ResponseResult over(Integer registrationId);
 }

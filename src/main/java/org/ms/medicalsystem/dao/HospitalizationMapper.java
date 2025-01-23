@@ -1,6 +1,7 @@
 package org.ms.medicalsystem.dao;
 
 import org.ms.medicalsystem.model.Hospitalization;
+import org.ms.medicalsystem.model.Registration;
 
 import java.util.List;
 
@@ -20,4 +21,5 @@ public interface HospitalizationMapper {
     List<Hospitalization> getAllHp();
 
     int discharge(int id);
+
 }
